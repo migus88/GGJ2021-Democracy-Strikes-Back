@@ -34,11 +34,22 @@ public class FieldTile : MonoBehaviour, IGridCell
     
     
     private static readonly int IsHovered = Shader.PropertyToID("_IsHovered");
+    private static readonly int IsPathHighlighted = Shader.PropertyToID("_IsPathHighlighted");
 
 
     private void Awake()
     {
         IsWalkable = _isWalkable;
+    }
+
+    public void OnPathHighlight()
+    {
+        _renderer.material.SetInt(IsPathHighlighted, 1);
+    }
+
+    public void OnPathCleared()
+    {
+        _renderer.material.SetInt(IsPathHighlighted, 0);
     }
 
     public void OnHover()

@@ -13,14 +13,8 @@ public class Field : MonoBehaviour, IGrid
     [SerializeField] private Vector2 _cellSize;
     [SerializeField] private int _columnsCount;
     [SerializeField] private FieldTile[] _tiles;
-
-    private void Awake()
-    {
-        UpdateMatrix();
-    }
-
     
-    private void UpdateMatrix()
+    public void UpdateMatrix()
     {
         var rowsCount = (int) Math.Ceiling((double) _tiles.Length / _columnsCount);
 
