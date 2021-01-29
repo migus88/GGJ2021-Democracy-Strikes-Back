@@ -25,7 +25,8 @@ public class BattleInstaller : MonoInstaller
         
         Container.Bind<AStar>().FromInstance(new AStar(_field, new PathfinderSettings
         {
-            IsDiagonalMovementEnabled = false
+            IsDiagonalMovementEnabled = false,
+            IsCalculatingOccupiedCells = false
         }));
 
         Container.Bind<BattleManager>().FromInstance(_battleManager).AsSingle();
