@@ -2,18 +2,18 @@
 using Bootstrap.Code.Settings;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace Bootstrap.Code.Testers
 {
     public class SoundServiceTest : MonoBehaviour
     {
-        [SerializeField] private SoundService _soundService;
-        [SerializeField] private SoundSettings _soundSettings;
-
+        [Inject] private SoundService _soundService;
 
         [Button]
         public async void TestAudioRetrieval()
-        { _soundService.RetrieveAudioClip(SoundSettings.SoundType.BACKGROUND,_soundSettings);
+        {
+            _soundService.PlaySound(SoundSettings.SoundType.Click);
         }
     }
 }

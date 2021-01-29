@@ -14,10 +14,10 @@ namespace Bootstrap.Code.Settings
         public SceneAudioList AudioList;
         public enum SoundType
         {
-          CLICK,
-          WIND,
-          FART,
-          BACKGROUND
+          Click = 0,
+          Wind = 1,
+          Fart = 2,
+          Background = 3
         }
 
         [Serializable]

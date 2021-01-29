@@ -13,10 +13,12 @@ namespace Bootstrap.Code.Services
 {
     public class SoundService : MonoBehaviour
     {
-        public void RetrieveAudioClip(SoundSettings.SoundType type,SoundSettings settings)
+        [SerializeField] private SoundSettings _soundSettings;
+
+        public void PlaySound(SoundSettings.SoundType type)
         {
             AudioClip clip = null;
-            if(settings.AudioList.TryGetValue(type,out clip))
+            if(_soundSettings.AudioList.TryGetValue(type,out clip))
             {
                 Debug.Log($"Got the sound clip");
             }
