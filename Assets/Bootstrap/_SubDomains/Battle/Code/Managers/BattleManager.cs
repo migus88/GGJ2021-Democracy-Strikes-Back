@@ -69,9 +69,10 @@ public class BattleManager : MonoBehaviour
         
         foreach (var tile in _tiles)
         {
-            if (path.Contains(tile.Coordinates))
+            var index = path.IndexOf(tile.Coordinates);
+            if (index >= 0)//path.Contains(tile.Coordinates))
             {
-                tile.OnPathHighlight();
+                tile.OnPathHighlight(index);
             }
             else
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Atomic.Pathfinding.Core.Helpers;
 using Atomic.Pathfinding.Core.Interfaces;
+using TMPro;
 using UnityEngine;
 
 public class FieldTile : MonoBehaviour, IGridCell
@@ -31,8 +32,9 @@ public class FieldTile : MonoBehaviour, IGridCell
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private bool _isWalkable = true;
     [SerializeField] private double _weight = 1;
-    
-    
+    [SerializeField] private TextMeshProUGUI _stepNumberText;
+
+
     private static readonly int IsHovered = Shader.PropertyToID("_IsHovered");
     private static readonly int IsPathHighlighted = Shader.PropertyToID("_IsPathHighlighted");
 
@@ -42,13 +44,20 @@ public class FieldTile : MonoBehaviour, IGridCell
         IsWalkable = _isWalkable;
     }
 
-    public void OnPathHighlight()
+    public void OnPathHighlight(int position)
     {
+        if (position > 0)
+        {
+            _stepNumberText.gameObject.SetActive(true);
+            _stepNumberText.text = position.ToString();
+        }
+
         _renderer.material.SetInt(IsPathHighlighted, 1);
     }
 
     public void OnPathCleared()
     {
+        _stepNumberText.gameObject.SetActive(false);
         _renderer.material.SetInt(IsPathHighlighted, 0);
     }
 
