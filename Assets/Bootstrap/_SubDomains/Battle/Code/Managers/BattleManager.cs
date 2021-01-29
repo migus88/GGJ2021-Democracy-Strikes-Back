@@ -134,7 +134,10 @@ public class BattleManager : MonoBehaviour
         foreach (var character in _allCharacters)
         {
             var coords = character.Value.Origin;
-            _field.TileMatrix[coords.Y(), coords.X()].IsOccupied = true;
+            var tile = _field.GetTile(coords);
+            
+            if(tile)
+                tile.IsOccupied = true;
         }
     }
 

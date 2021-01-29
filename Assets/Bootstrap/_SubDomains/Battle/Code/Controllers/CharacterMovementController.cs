@@ -58,6 +58,13 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
                 {
                     _isMoving = false;
                     _battleManager.OnCharacterFinishedMovement(_character);
+
+                    var tile = _field.GetTile(_character.Origin);
+
+                    if (!tile)
+                    {
+                        _character.Die();
+                    }
                 });
 
             while (_isMoving)
@@ -68,6 +75,14 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
                 var newTarget = _queue.Dequeue();
                 await MoveToPath(newTarget.Item1, newTarget.Item2);
             }*/
+        }
+
+        public void Die()
+        {
+            transform.DOMoveY(transform.position.y - 18, Settings.FallDuration).OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+            });
         }
     }
 }

@@ -20,6 +20,7 @@ public class Character : MonoBehaviour, IAgent
     public (int, int) Origin => transform.position.VectorToCoordinates();
     public int PlayerID { get; set; }
     public int ActionPoints { get; private set; }
+    public bool IsDead { get; private set; }
 
     [SerializeField] private CharacterSettings _settings;
     [SerializeField] private CharacterMovementController _movementController;
@@ -148,6 +149,13 @@ public class Character : MonoBehaviour, IAgent
         {
             //Fall
         }
+    }
+
+    public void Die()
+    {
+        IsDead = true;
+        _movementController.Die();
+        //TODO: Animate
     }
 
     public void OnPathResult(PathResult result)

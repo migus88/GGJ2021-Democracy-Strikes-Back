@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Atomic.Pathfinding.Core.Helpers;
 using Atomic.Pathfinding.Core.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -15,6 +16,17 @@ public class Field : MonoBehaviour, IGrid
     [SerializeField] private int _columnsCount;
     [SerializeField] private FieldTile[] _tiles;
 
+    public FieldTile GetTile((int, int) coords)
+    {
+        var x = coords.X();
+        var y = coords.Y();
+        
+        if (x < 0 || y < 0 || y >= TileMatrix.GetLength(0) || x >= TileMatrix.GetLength(1))
+            return null;
+
+        return TileMatrix[y, x];
+    }
+    
     public void UpdateMatrix()
     {
         var rowsCount = (int) Math.Ceiling((double) _tiles.Length / _columnsCount);
