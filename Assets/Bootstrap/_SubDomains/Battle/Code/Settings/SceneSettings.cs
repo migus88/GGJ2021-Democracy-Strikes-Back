@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 
 namespace Bootstrap._SubDomains.Battle.Code.Settings
 {
-    [CreateAssetMenu(fileName = "Dummy", menuName = "Atomic/Dummy Settings", order = 0)]
-    public class DummySettings : ScriptableObject
+    [CreateAssetMenu(fileName = "Scene", menuName = "Atomic/Settings", order = 0)]
+    public class SceneSettings : ScriptableObject
     {
         public AssetReferenceT<SceneAsset> MainScene;
         public AssetReferenceT<SceneAsset>[] DependencyScenes;
@@ -20,23 +20,6 @@ namespace Bootstrap._SubDomains.Battle.Code.Settings
             public SceneAssetReference(string guid) : base(guid)
             {
             }
-        }
-    }
-
-    public class SceneSystem : MonoBehaviour
-    {
-        //
-        
-        public async UniTask LoadScene(DummySettings settings)
-        {
-            var tasks = new List<UniTask>();
-
-            foreach (var scene in settings.DependencyScenes) 
-            {
-                tasks.Add(Addressables.LoadSceneAsync(scene, LoadSceneMode.Additive).ToUniTask());
-            }
-
-            await UniTask.WhenAll(tasks);
         }
     }
 }
