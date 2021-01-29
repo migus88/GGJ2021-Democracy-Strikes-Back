@@ -155,6 +155,7 @@ public class Character : MonoBehaviour, IAgent
     {
         IsDead = true;
         _movementController.Die();
+        _battleManager.OnCharacterDied();
         //TODO: Animate
     }
 

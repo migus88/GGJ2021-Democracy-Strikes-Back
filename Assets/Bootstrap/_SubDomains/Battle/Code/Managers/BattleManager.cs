@@ -88,6 +88,18 @@ public class BattleManager : MonoBehaviour
 
         _currentCharacter = null;
     }
+
+    public void OnCharacterDied()
+    {
+        if (_playerCharacters.All(c => c.Value.IsDead))
+        {
+            Debug.Log("Democracy wants your oil!");
+        }
+        else if (_enemyCharacters.All(c => c.Value.IsDead))
+        {
+            Debug.Log("USSR 4 EVER");
+        }
+    }
     
     public void HighlightPath(List<PathCell> path)
     {
