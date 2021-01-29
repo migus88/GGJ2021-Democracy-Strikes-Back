@@ -37,6 +37,7 @@ public class FieldTile : MonoBehaviour, IGridCell
 
     private static readonly int IsHovered = Shader.PropertyToID("_IsHovered");
     private static readonly int IsPathHighlighted = Shader.PropertyToID("_IsPathHighlighted");
+    private static readonly int IsEnemyPathHighlighted = Shader.PropertyToID("_IsEnemyHighlighted");
 
 
     private void Awake()
@@ -44,7 +45,7 @@ public class FieldTile : MonoBehaviour, IGridCell
         IsWalkable = _isWalkable;
     }
 
-    public void OnPathHighlight(int position)
+    public void OnPathHighlight(int position, bool isCollision)
     {
         if (position > 0)
         {
@@ -52,13 +53,14 @@ public class FieldTile : MonoBehaviour, IGridCell
             _stepNumberText.text = position.ToString();
         }
 
-        _renderer.material.SetInt(IsPathHighlighted, 1);
+        _renderer.material.SetInt(isCollision ? IsEnemyPathHighlighted : IsPathHighlighted, 1);
     }
 
     public void OnPathCleared()
     {
         _stepNumberText.gameObject.SetActive(false);
         _renderer.material.SetInt(IsPathHighlighted, 0);
+        _renderer.material.SetInt(IsEnemyPathHighlighted, 0);
     }
 
     public void OnHover()

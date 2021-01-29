@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using Atomic.Pathfinding.Core;
 using Atomic.Pathfinding.Core.Data;
+using Atomic.Pathfinding.Core.Helpers;
 using Atomic.Pathfinding.Core.Interfaces;
 using Bootstrap._SubDomains.Battle.Code.Controllers;
+using Bootstrap._SubDomains.Battle.Code.Data;
 using Bootstrap._SubDomains.Battle.Code.Settings;
 using UnityEngine;
 using Zenject;
@@ -22,12 +25,12 @@ public class Character : MonoBehaviour, IAgent
 
     [Inject] private AStar _pathfinding;
     [Inject] private BattleManager _battleManager;
+    [Inject] private Field _field;
     
-    
-    private List<(int, int)> _highlightedPath;
+    private List<PathCell> _highlightedPath;
 
-    private readonly ConcurrentDictionary<(int, int), List<(int, int)>> _availablePaths =
-        new ConcurrentDictionary<(int, int), List<(int, int)>>();
+    private readonly ConcurrentDictionary<(int, int), List<PathCell>> _availablePaths =
+        new ConcurrentDictionary<(int, int), List<PathCell>>();
 
     private void Awake()
     {
@@ -64,7 +67,8 @@ public class Character : MonoBehaviour, IAgent
             if (!pathResult.IsPathFound || (pathResult.Path.Count - 1) > ActionPoints)
                 return;
 
-            path = pathResult.Path;
+            path = GetCalculatedPath(pathResult.Path);
+            
             _availablePaths.TryAdd(destination, path);
         }
         
@@ -74,7 +78,49 @@ public class Character : MonoBehaviour, IAgent
         _battleManager.HighlightPath(path);
     }
 
-    public async void Move(List<(int, int)> path)
+    private List<PathCell> GetCalculatedPath(List<(int, int)> path)
+    {
+        if (path.Count == 1)
+        {
+            return new List<PathCell>
+            {
+                new PathCell
+                {
+                    Coordinates = path[0]
+                }
+            };
+        }
+        
+        var calculated = new List<PathCell>(path.Count);
+
+        for (int i = 0; i < path.Count; i++)
+        {
+            var coord = path[i];
+            var tile = _field.TileMatrix[coord.Y(), coord.X()];
+            var cell = new PathCell
+            {
+                Coordinates = coord, 
+                IsCharacter = tile.IsOccupied && coord != Origin
+            };
+
+            if (i < path.Count - 1)
+            {
+                var next = path[i + 1];
+                cell.Direction = (next.X() - coord.X(), next.Y() - coord.Y());
+            }
+            else
+            {
+                var prev = path[i - 1];
+                cell.Direction = (coord.X() - prev.X(), coord.Y() - prev.Y());
+            }
+            
+            calculated.Add(cell);
+        }
+
+        return calculated;
+    }
+
+    public async void Move(List<PathCell> path)
     {
         UseActionPoints(path.Count - 1);
         await _movementController.MoveToPath(path);

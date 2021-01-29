@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Bootstrap._SubDomains.Battle.Code.Data;
 using Bootstrap._SubDomains.Battle.Code.Settings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -17,7 +18,7 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
         private List<(int, int)> _currentPath;
         private bool _isMoving = false;
         
-        public async UniTask MoveToPath(List<(int, int)> path)
+        public async UniTask MoveToPath(List<PathCell> path)
         {
             if(_isMoving)
                 return;
