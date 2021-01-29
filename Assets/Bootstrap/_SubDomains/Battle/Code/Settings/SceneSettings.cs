@@ -11,8 +11,8 @@ namespace Bootstrap._SubDomains.Battle.Code.Settings
     [CreateAssetMenu(fileName = "Scene", menuName = "Atomic/Settings", order = 0)]
     public class SceneSettings : ScriptableObject
     {
-        public AssetReferenceT<SceneAsset> MainScene;
-        public AssetReferenceT<SceneAsset>[] DependencyScenes;
+        public SceneAssetReference MainScene;
+        public SceneAssetReference[] DependencyScenes;
 
         [System.Serializable]
         public class SceneAssetReference : AssetReferenceT<SceneAsset>
