@@ -11,9 +11,15 @@ namespace Bootstrap.Code.Testers
         [Inject] private SoundService _soundService;
 
         [Button]
-        public async void TestAudioRetrieval()
+        public void TestAudioRetrieval()
         {
             _soundService.PlaySound(SoundSettings.SoundType.Click);
+        }
+        
+        [Button]
+        public void TestPlayMusic()
+        {
+            _soundService.PlayMusic(SoundSettings.MusicType.Menu);
         }
     }
 }

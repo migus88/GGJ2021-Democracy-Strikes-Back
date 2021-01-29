@@ -12,15 +12,25 @@ namespace Bootstrap.Code.Settings
     public class SoundSettings : ScriptableObject
     {
         public SceneAudioList AudioList;
+        public SceneMusicList MusicList;
         public enum SoundType
         {
           Click = 0,
           Wind = 1,
-          Fart = 2,
-          Background = 3
+          Fart = 2
         }
 
+        public enum MusicType
+        {
+            Menu = 0,
+            Intro = 1,
+            Battle = 2,
+            Credits = 3
+        }
+        
         [Serializable]
         public class SceneAudioList : UnitySerializedDictionary<SoundType, AudioClip> { }
+        [Serializable]
+        public class SceneMusicList : UnitySerializedDictionary<MusicType, AudioClip> { }
     }
 }

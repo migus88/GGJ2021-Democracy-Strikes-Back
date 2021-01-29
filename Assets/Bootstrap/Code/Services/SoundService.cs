@@ -23,5 +23,14 @@ namespace Bootstrap.Code.Services
                 Debug.Log($"Got the sound clip");
             }
         }
+
+        public void PlayMusic(SoundSettings.MusicType type)
+        {
+            AudioClip clip = null;
+            if(_soundSettings.MusicList.TryGetValue(type,out clip))
+            {
+                Debug.Log($"Got the sound clip");
+            } 
+        }
     }
 }
