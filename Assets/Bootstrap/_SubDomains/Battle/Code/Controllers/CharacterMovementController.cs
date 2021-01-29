@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Bootstrap._SubDomains.Battle.Code.Settings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
 {
     public class CharacterMovementController : MonoBehaviour
     {
+        public CharacterSettings Settings { get; set; }
+        
         [Inject] private BattleManager _battleManager;
         
         private int _currentPathIndex = -1;
@@ -21,7 +24,7 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
 
             _isMoving = true;
 
-            transform.DOPath(path.CoordinatesToVector(), 1f).OnComplete(() =>
+            transform.DOPath(path.CoordinatesToVector(), Settings.TileMovementAnimationSpeed * path.Count).OnComplete(() =>
             {
                 _battleManager.OnCharacterFinishedMovement();
                 _isMoving = false;

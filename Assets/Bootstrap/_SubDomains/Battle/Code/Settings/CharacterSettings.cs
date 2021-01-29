@@ -6,5 +6,6 @@ namespace Bootstrap._SubDomains.Battle.Code.Settings
     public class CharacterSettings : ScriptableObject
     {
         public int MaxMovementDistance;
+        public float TileMovementAnimationSpeed = 0.3f;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Atomic.Pathfinding.Core;
@@ -25,6 +26,11 @@ public class Character : MonoBehaviour, IAgent
 
     private readonly ConcurrentDictionary<(int, int), List<(int, int)>> _availablePaths =
         new ConcurrentDictionary<(int, int), List<(int, int)>>();
+
+    private void Awake()
+    {
+        _movementController.Settings = _settings;
+    }
 
     public async void FindPath((int, int) destination)
     {
