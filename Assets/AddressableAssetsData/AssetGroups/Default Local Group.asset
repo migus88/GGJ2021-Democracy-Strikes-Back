@@ -23,6 +23,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: d06532806008fc144bbcd544299a8f67
+    m_Address: Assets/Bootstrap/_SubDomains/Battle/Settings/BattleSounds.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5302c829156e3f04f9ede9e2dc51803f, type: 2}
   m_SchemaSet:
