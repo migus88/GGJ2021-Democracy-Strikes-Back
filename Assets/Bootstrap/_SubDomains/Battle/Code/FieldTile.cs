@@ -32,6 +32,9 @@ public class FieldTile : MonoBehaviour, IGridCell
     [SerializeField] private bool _isWalkable = true;
     [SerializeField] private double _weight = 1;
     
+    
+    private static readonly int IsHovered = Shader.PropertyToID("_IsHovered");
+
 
     private void Awake()
     {
@@ -40,7 +43,12 @@ public class FieldTile : MonoBehaviour, IGridCell
 
     public void OnHover()
     {
-        Debug.Log($"Hovered: {Coordinates}");
+        _renderer.material.SetInt(IsHovered, 1);
+    }
+
+    public void OnHoverLeave()
+    {
+        _renderer.material.SetInt(IsHovered, 0);
     }
 
 #if UNITY_EDITOR
