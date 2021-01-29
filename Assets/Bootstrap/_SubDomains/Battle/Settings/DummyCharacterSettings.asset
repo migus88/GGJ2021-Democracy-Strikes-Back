@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab85586c9aa4163ba7621bd168962de, type: 3}
   m_Name: DummyCharacterSettings
   m_EditorClassIdentifier: 
-  MaxActionPoints: 4
-  TileMovementAnimationSpeed: 0.3
+  MaxActionPoints: 50
+  TileMovementAnimationSpeed: 0.2

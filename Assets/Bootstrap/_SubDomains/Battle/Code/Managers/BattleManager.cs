@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Atomic.Pathfinding.Core;
 using Atomic.Pathfinding.Core.Helpers;
+using Bootstrap._SubDomains.Battle.Code.Data;
 using Bootstrap._SubDomains.Battle.Code.Managers;
 using Bootstrap._SubDomains.Battle.Code.Settings;
 using UnityEngine;
@@ -31,7 +32,8 @@ public class BattleManager : MonoBehaviour
 
     private (int, int) _hoveredTileCoordinates = (-1, -1);
     private Character _draggedCharacter;
-    private List<(int, int)> _highlightedPath;
+    private Character _currentCharacter;
+    private List<PathCell> _highlightedPath;
     private TurnManager _turnManager;
 
     private void Awake()
@@ -69,28 +71,36 @@ public class BattleManager : MonoBehaviour
         _inputManager.ActionCanceled -= OnActionCanceled;
     }
 
-    public void OnCharacterFinishedMovement()
+    public void OnCharacterFinishedMovement(Character character)
     {
-        _highlightedPath = null;
         UpdateOccupiedTiles();
+        
+        if(character != _currentCharacter)
+            return;
+        
+        _highlightedPath = null;
 
         if (ActiveCharacters.All(c => c.Value.ActionPoints <= 0))
         {
             _turnManager.TurnEnded();
             OnTileHovered((-1, -1));
         }
+
+        _currentCharacter = null;
     }
     
-    public void HighlightPath(List<(int, int)> path)
+    public void HighlightPath(List<PathCell> path)
     {
         _highlightedPath = path;
         
         foreach (var tile in _tiles)
         {
-            var index = path.IndexOf(tile.Coordinates);
+            var index = path.FindIndex(c => c.Coordinates == tile.Coordinates);
+            
             if (index >= 0)
             {
-                tile.OnPathHighlight(index);
+                tile.OnPathHighlight(index, path[index].IsCharacter);
+                //TODO: Highlight trajectory
             }
             else
             {
@@ -141,6 +151,7 @@ public class BattleManager : MonoBehaviour
 
         if (_highlightedPath != null && _highlightedPath.Count > 1)
         {
+            _currentCharacter = _draggedCharacter;
             _draggedCharacter.Move(_highlightedPath);
         }
 
