@@ -7,5 +7,6 @@ namespace Bootstrap._SubDomains.Battle.Code.Settings
     {
         public int MaxActionPoints = 4;
         public float TileMovementAnimationSpeed = 0.3f;
+        public float FallDuration = 1f;
     }
 }
