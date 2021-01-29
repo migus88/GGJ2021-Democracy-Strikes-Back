@@ -14,6 +14,8 @@ public class Character : MonoBehaviour, IAgent
 {
     public int Size => 1;
     public (int, int) Origin => transform.position.VectorToCoordinates();
+    public int PlayerID { get; set; }
+    public int ActionPoints { get; private set; }
 
     [SerializeField] private CharacterSettings _settings;
     [SerializeField] private CharacterMovementController _movementController;
@@ -32,20 +34,41 @@ public class Character : MonoBehaviour, IAgent
         _movementController.Settings = _settings;
     }
 
+    public void UseActionPoints(int amount)
+    {
+        if (amount < 0)
+            throw new Exception("The amount cannot be negative");
+        
+        if (ActionPoints < amount)
+            throw new Exception("Can't use more action points then available");
+
+        ActionPoints -= amount;
+    }
+
+    public void InitActionPoints()
+    {
+        ActionPoints = _settings.MaxActionPoints;
+    }
+
+    public void ClearActionPoints()
+    {
+        ActionPoints = 0;
+    }
+
     public async void FindPath((int, int) destination)
     {
         if (!_availablePaths.TryGetValue(destination, out var path))
         {
             var pathResult = await _pathfinding.GetPathAsync(this, Origin, destination);
 
-            if (!pathResult.IsPathFound)
+            if (!pathResult.IsPathFound || (pathResult.Path.Count - 1) > ActionPoints)
                 return;
 
             path = pathResult.Path;
             _availablePaths.TryAdd(destination, path);
         }
         
-        if(path.Count > _settings.MaxMovementDistance + 1)
+        if(path.Count > _settings.MaxActionPoints + 1)
             return;
         
         _battleManager.HighlightPath(path);
@@ -53,6 +76,7 @@ public class Character : MonoBehaviour, IAgent
 
     public async void Move(List<(int, int)> path)
     {
+        UseActionPoints(path.Count - 1);
         await _movementController.MoveToPath(path);
         _availablePaths.Clear();
     }

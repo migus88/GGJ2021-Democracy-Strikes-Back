@@ -1,13 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Atomic.Pathfinding.Core;
 using Atomic.Pathfinding.Core.Helpers;
+using Bootstrap._SubDomains.Battle.Code.Managers;
+using Bootstrap._SubDomains.Battle.Code.Settings;
 using UnityEngine;
 using Zenject;
 
 public class BattleManager : MonoBehaviour
 {
+    public Dictionary<string, Character> ActiveCharacters =>
+        _turnManager.CurrentPlayerId == 0 ? _playerCharacters : _enemyCharacters;
+    
+    public Dictionary<string, Character> InactiveCharacters =>
+        _turnManager.CurrentPlayerId == 1 ? _playerCharacters : _enemyCharacters;
+    
+    [SerializeField] private LevelConfig _levelConfig;
+    
     [Inject] private InputManager _inputManager;
     [Inject] private DiContainer _container;
     [Inject] private FieldTile[] _tiles;
@@ -21,15 +32,86 @@ public class BattleManager : MonoBehaviour
     private (int, int) _hoveredTileCoordinates = (-1, -1);
     private Character _draggedCharacter;
     private List<(int, int)> _highlightedPath;
+    private TurnManager _turnManager;
 
     private void Awake()
     {
+        _turnManager = new TurnManager(_levelConfig);
+        _turnManager.RoundStarted += OnRoundStarted;
+
+        foreach (var character in _playerCharacters)
+        {
+            character.Value.PlayerID = 0;
+        }
+
+        foreach (var character in _enemyCharacters)
+        {
+            character.Value.PlayerID = 1;
+        }
+        
         _inputManager.TileHovered += OnTileHovered;
         _inputManager.CharacterDragStarted += OnCharacterDragStarted;
         _inputManager.CharacterDragEnded += OnCharacterDragEnded;
         _inputManager.ActionCanceled += OnActionCanceled;
         
         UpdateOccupiedTiles();
+        
+        _turnManager.StartRound();
+    }
+
+    private void OnDestroy()
+    {
+        _turnManager.RoundStarted -= OnRoundStarted;
+        
+        _inputManager.TileHovered -= OnTileHovered;
+        _inputManager.CharacterDragStarted -= OnCharacterDragStarted;
+        _inputManager.CharacterDragEnded -= OnCharacterDragEnded;
+        _inputManager.ActionCanceled -= OnActionCanceled;
+    }
+
+    public void OnCharacterFinishedMovement()
+    {
+        _highlightedPath = null;
+        UpdateOccupiedTiles();
+
+        if (ActiveCharacters.All(c => c.Value.ActionPoints <= 0))
+        {
+            _turnManager.TurnEnded();
+            OnTileHovered((-1, -1));
+        }
+    }
+    
+    public void HighlightPath(List<(int, int)> path)
+    {
+        _highlightedPath = path;
+        
+        foreach (var tile in _tiles)
+        {
+            var index = path.IndexOf(tile.Coordinates);
+            if (index >= 0)
+            {
+                tile.OnPathHighlight(index);
+            }
+            else
+            {
+                tile.OnPathCleared();
+            }
+        }
+    }
+    
+    #region Private methods
+
+    private void OnRoundStarted()
+    {
+        foreach (var character in ActiveCharacters)
+        {
+            character.Value.InitActionPoints();
+        }
+
+        foreach (var character in InactiveCharacters)
+        {
+            character.Value.ClearActionPoints();
+        }
     }
 
     private void UpdateOccupiedTiles()
@@ -54,7 +136,7 @@ public class BattleManager : MonoBehaviour
 
     private void OnCharacterDragEnded()
     {
-        if (!_draggedCharacter)
+        if (!_draggedCharacter || _turnManager.CurrentPlayerId != 0)
             return;
 
         if (_highlightedPath != null && _highlightedPath.Count > 1)
@@ -68,16 +150,13 @@ public class BattleManager : MonoBehaviour
 
     private void OnCharacterDragStarted(Character character)
     {
+        if(_turnManager.CurrentPlayerId != 0)
+            return;
+        
         _draggedCharacter = character;
     }
 
-    public void OnCharacterFinishedMovement()
-    {
-        _highlightedPath = null;
-        UpdateOccupiedTiles();
-    }
-
-    public void ClearPathHighlight()
+    private void ClearPathHighlight()
     {
         foreach (var tile in _tiles)
         {
@@ -85,26 +164,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void HighlightPath(List<(int, int)> path)
-    {
-        _highlightedPath = path;
-        
-        foreach (var tile in _tiles)
-        {
-            var index = path.IndexOf(tile.Coordinates);
-            if (index >= 0)
-            {
-                tile.OnPathHighlight(index);
-            }
-            else
-            {
-                tile.OnPathCleared();
-            }
-        }
-    }
-
     private void OnTileHovered((int, int) coordinates)
     {
+        if(_turnManager.CurrentPlayerId != 0)
+            return;
+        
         if (coordinates == _hoveredTileCoordinates)
             return;
 
@@ -129,4 +193,6 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+    
+    #endregion
 }
