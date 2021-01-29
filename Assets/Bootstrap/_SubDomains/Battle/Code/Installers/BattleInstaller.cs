@@ -6,6 +6,7 @@ using Zenject;
 public class BattleInstaller : MonoInstaller
 {
     [SerializeField] private InputManager _inputManager;
+    
 
     public override void InstallBindings()
     {
