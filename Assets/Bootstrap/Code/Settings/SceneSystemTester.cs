@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Bootstrap._SubDomains.Battle.Code.Settings
+namespace Bootstrap.Code.Settings
 {
     public class SceneSystemTester : MonoBehaviour
     {

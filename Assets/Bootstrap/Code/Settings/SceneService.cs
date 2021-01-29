@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using Bootstrap._SubDomains.Battle.Code.Settings;
 using Cysharp.Threading.Tasks;
 using ModestTree;
-using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
-namespace Bootstrap._SubDomains.Battle.Code.Settings
+namespace Bootstrap.Code.Settings
 {
     
     
     public class SceneService : MonoBehaviour 
     {
-        //
-        private List<SceneSettings.SceneAssetReference> _currentlyLoadedScenes;
+        private readonly List<SceneSettings.SceneAssetReference> _currentlyLoadedScenes = new List<SceneSettings.SceneAssetReference>();
         public async UniTask LoadScenes(SceneSettings settings)
         {
             await UnloadAllScenes();
@@ -32,13 +30,14 @@ namespace Bootstrap._SubDomains.Battle.Code.Settings
         public async UniTask LoadScene(SceneSettings.SceneAssetReference scene)
         {
             await Addressables.LoadSceneAsync(scene, LoadSceneMode.Additive).ToUniTask();
-            _currentlyLoadedScenes.Append(scene);
+            _currentlyLoadedScenes.Add(scene);
+            Debug.Log(_currentlyLoadedScenes.Count.ToString());
         }
         
         public async UniTask UnloadAllScenes()
         {
-            if (_currentlyLoadedScenes.IsNullOrEmpty())
-                _currentlyLoadedScenes = new List<SceneSettings.SceneAssetReference>();
+            if(_currentlyLoadedScenes.IsEmpty())
+                return;
             
             var tasks = new List<UniTask>();
             foreach (var scene in _currentlyLoadedScenes)
@@ -58,8 +57,8 @@ namespace Bootstrap._SubDomains.Battle.Code.Settings
         public async void Dispose()
         {
             await UnloadAllScenes();
-            _currentlyLoadedScenes=null;
-            Dispose();
+            _currentlyLoadedScenes.Clear();
         }
     }
+
 }
