@@ -1,4 +1,5 @@
 ﻿using System;
+using Bootstrap.Code.Services;
 using Bootstrap.Code.Settings;
 using UnityEngine;
 using Zenject;
@@ -9,8 +10,7 @@ namespace Bootstrap.Code
     {
         [SerializeField] private SceneSettings _sceneSettings;
         [SerializeField] private Camera _camera;
-        
-        
+
         [Inject] private SceneService _sceneService;
 
         private void Start()

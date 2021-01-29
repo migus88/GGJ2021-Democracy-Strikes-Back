@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 
 namespace Bootstrap.Code.Settings
 {
-    [CreateAssetMenu(fileName = "Scene", menuName = "Atomic/Settings", order = 0)]
+    [CreateAssetMenu(fileName = "Scene", menuName = "Atomic/Settings/Scene", order = 0)]
     public class SceneSettings : ScriptableObject
     {
         public SceneAssetReference MainScene;
