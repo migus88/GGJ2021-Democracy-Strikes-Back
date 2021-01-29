@@ -60,6 +60,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _IsHovered: 0
+    - _IsPathHighlighted: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _QueueOffset: 0
@@ -76,7 +77,8 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HoveredTintColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0}
+    - _HoveredTintColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 0}
+    - _PathHighlightColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
 --- !u!114 &3571491402691370625
 MonoBehaviour:

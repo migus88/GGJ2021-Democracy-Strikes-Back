@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     public event Action<Character> CharacterDragStarted;
     public event Action CharacterDragEnded;
     public event Action<(int, int)> TileHovered;
+    public event Action ActionCanceled;
 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _playerMask;
@@ -19,6 +20,12 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            ActionCanceled?.Invoke();
+            return;
+        }
+        
         if (Input.GetMouseButtonUp(0))
         {
             CharacterDragEnded?.Invoke();

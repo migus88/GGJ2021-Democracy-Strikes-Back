@@ -1276,6 +1276,7 @@ GameObject:
   - component: {fileID: 302684426}
   - component: {fileID: 302684428}
   - component: {fileID: 302684427}
+  - component: {fileID: 302684429}
   m_Layer: 8
   m_Name: DummyCharacter
   m_TagString: Untagged
@@ -1310,6 +1311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db1c6c43e14fa047aa6bb575470cde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: 2d600fc5907bcde4d81362e47927e92f, type: 2}
+  _movementController: {fileID: 302684429}
 --- !u!136 &302684428
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1324,6 +1327,18 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0.5, y: 0.5, z: 0.5}
+--- !u!114 &302684429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302684425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f30096c73e48f69693696b2d73779d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &321059031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3852,6 +3867,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputManager: {fileID: 1668146059}
+  _battleManager: {fileID: 1497526302}
+  _field: {fileID: 1528566385}
   _tiles:
   - {fileID: 5628929728039288982}
   - {fileID: 163291264}
@@ -4925,6 +4942,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1438237827}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1497526302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2773602181935425538, guid: 09db469c8f1d7824586c5e495070a9f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1784637049}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eab4b3d9ee192e34c979b6f01baf322b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1515998418
 PrefabInstance:
   m_ObjectHideFlags: 0

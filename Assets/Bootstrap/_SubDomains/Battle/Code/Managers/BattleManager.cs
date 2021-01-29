@@ -11,56 +11,99 @@ public class BattleManager : MonoBehaviour
     [Inject] private DiContainer _container;
     [Inject] private FieldTile[] _tiles;
     [Inject] private Field _field;
+    [Inject] private AStar _pathfinder;
 
-
-    private AStar _pathfinder;
     private (int, int) _hoveredTileCoordinates = (-1, -1);
-    private FieldTile _hoveredTile;
     private Character _draggedCharacter;
+    private List<(int, int)> _highlightedPath;
 
     private void Awake()
     {
-        _pathfinder = new AStar(_field);
-        
-        _inputManager.TileHovered += InputManagerOnTileHovered;
-        _inputManager.CharacterDragStarted += InputManagerOnCharacterDragStarted;
-        _inputManager.CharacterDragEnded += InputManagerOnCharacterDragEnded;
+        _inputManager.TileHovered += OnTileHovered;
+        _inputManager.CharacterDragStarted += OnCharacterDragStarted;
+        _inputManager.CharacterDragEnded += OnCharacterDragEnded;
+        _inputManager.ActionCanceled += OnActionCanceled;
     }
 
-    private void InputManagerOnCharacterDragEnded()
+    private void OnActionCanceled()
     {
-        if(!_draggedCharacter)
-            return;
-        
-        _draggedCharacter = null;
-        Debug.Log("Stopped Dragging");
+        _highlightedPath = null;
+        OnCharacterDragEnded();
     }
 
-    private void InputManagerOnCharacterDragStarted(Character character)
+    private void OnCharacterDragEnded()
+    {
+        if (!_draggedCharacter)
+            return;
+
+        if (_highlightedPath != null && _highlightedPath.Count > 1)
+        {
+            _draggedCharacter.Move(_highlightedPath);
+        }
+
+        _draggedCharacter = null;
+        ClearPathHighlight();
+    }
+
+    private void OnCharacterDragStarted(Character character)
     {
         _draggedCharacter = character;
-        Debug.Log("Dragging");
     }
 
-    private void InputManagerOnTileHovered((int, int) coordinates)
+    public void OnCharacterFinishedMovement()
+    {
+        _highlightedPath = null;
+    }
+
+    public void ClearPathHighlight()
+    {
+        foreach (var tile in _tiles)
+        {
+            tile.OnPathCleared();
+        }
+    }
+
+    public void HighlightPath(List<(int, int)> path)
+    {
+        _highlightedPath = path;
+        
+        foreach (var tile in _tiles)
+        {
+            if (path.Contains(tile.Coordinates))
+            {
+                tile.OnPathHighlight();
+            }
+            else
+            {
+                tile.OnPathCleared();
+            }
+        }
+    }
+
+    private void OnTileHovered((int, int) coordinates)
     {
         if (coordinates == _hoveredTileCoordinates)
             return;
 
-        _hoveredTileCoordinates = coordinates;
-        
-        foreach (var tile in _tiles)
+        if (_draggedCharacter)
         {
-            if(tile.Coordinates == coordinates)
+            _draggedCharacter.FindPath(coordinates);
+        }
+        else
+        {
+            _hoveredTileCoordinates = coordinates;
+
+            foreach (var tile in _tiles)
             {
-                _hoveredTile = tile;
-                tile.OnHover();
+                if (tile.Coordinates == coordinates)
+                {
+                    tile.OnHover();
+                }
+                else
+                {
+                    tile.OnHoverLeave();
+                }
             }
-            else
-            {
-                tile.OnHoverLeave();
-            }
-            
         }
     }
 }
