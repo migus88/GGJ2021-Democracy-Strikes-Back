@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Bootstrap._SubDomains.Battle.Code.Settings;
+using Bootstrap.Code.Settings;
 using Cysharp.Threading.Tasks;
 using ModestTree;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
-namespace Bootstrap.Code.Settings
+namespace Bootstrap.Code.Services
 {
     public class SceneService : MonoBehaviour
     {
