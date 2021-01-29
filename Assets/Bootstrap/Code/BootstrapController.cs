@@ -19,7 +19,7 @@ namespace Bootstrap.Code
         }
 
 
-        private async void LoadFirstScene()
+        public async void LoadFirstScene()
         {
             await _sceneService.LoadScenes(_sceneSettings);
             _camera.gameObject.SetActive(false);

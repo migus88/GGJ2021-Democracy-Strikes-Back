@@ -4,14 +4,15 @@ using Cysharp.Threading.Tasks;
 using ModestTree;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace Bootstrap.Code.Services
 {
     public class SceneService : MonoBehaviour
     {
-        private readonly List<SceneSettings.SceneAssetReference> _currentlyLoadedScenes =
-            new List<SceneSettings.SceneAssetReference>();
+        private readonly List<SceneInstance> _currentlyLoadedScenes =
+            new List<SceneInstance>();
 
         public async UniTask LoadScenes(SceneSettings settings)
         {
@@ -29,8 +30,8 @@ namespace Bootstrap.Code.Services
 
         public async UniTask LoadScene(SceneSettings.SceneAssetReference scene)
         {
-            await Addressables.LoadSceneAsync(scene, LoadSceneMode.Additive).ToUniTask();
-            _currentlyLoadedScenes.Add(scene);
+            var sceneInstance = await Addressables.LoadSceneAsync(scene, LoadSceneMode.Additive).ToUniTask();
+            _currentlyLoadedScenes.Add(sceneInstance);
         }
 
         public async UniTask UnloadAllScenes()
@@ -41,8 +42,7 @@ namespace Bootstrap.Code.Services
             var tasks = new List<UniTask>();
             foreach (var scene in _currentlyLoadedScenes)
             {
-                if (scene?.OperationHandle != null)
-                    tasks.Add(Addressables.UnloadSceneAsync(scene.OperationHandle).ToUniTask());
+                tasks.Add(Addressables.UnloadSceneAsync(scene).ToUniTask());
             }
 
             await UniTask.WhenAll(tasks);
@@ -50,7 +50,6 @@ namespace Bootstrap.Code.Services
 
         public async UniTask UnloadScene(SceneSettings.SceneAssetReference scene)
         {
-            _currentlyLoadedScenes.RemoveWithConfirm(scene);
             await Addressables.UnloadSceneAsync(scene.OperationHandle).ToUniTask();
         }
 
