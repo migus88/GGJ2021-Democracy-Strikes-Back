@@ -10,22 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Built In Data
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: Built In Data
   m_Data:
     m_SerializedData: []
-  m_GUID: 9610a7916d4737b4f9c68f176d0c1c5b
+  m_GUID: 5ad95d8d64d4a7f47b652f60670eb489
   m_SerializeEntries:
-  - m_GUID: 6e3cd8503b847ba48a46f79da9f5d2b6
-    m_Address: Scenes/BattleScene
-    m_ReadOnly: 0
+  - m_GUID: Resources
+    m_Address: Resources
+    m_ReadOnly: 1
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
-  m_ReadOnly: 0
+  - m_GUID: EditorSceneList
+    m_Address: EditorSceneList
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 5302c829156e3f04f9ede9e2dc51803f, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 7f3ddb93dae67084395ab8004f6b7822, type: 2}
-    - {fileID: 11400000, guid: 6ec3a6df530197a4aa417152a8c39fed, type: 2}
+    - {fileID: 11400000, guid: 7e5b90bfb521151498e8418f7e21f1d9, type: 2}
