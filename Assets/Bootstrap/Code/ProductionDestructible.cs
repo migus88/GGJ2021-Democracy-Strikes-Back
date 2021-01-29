@@ -3,7 +3,7 @@
 namespace Bootstrap.Code
 {
    
-    public class EditorDestructible : MonoBehaviour
+    public class ProductionDestructible : MonoBehaviour
     {
         private void Awake()
         {
