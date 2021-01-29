@@ -197,7 +197,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _parentNewObjectsUnderSceneContext: 0
-  _contractNames: []
+  _contractNames:
+  - Bootstrap
   _parentContractNames: []
 --- !u!1 &392813672
 GameObject:
@@ -255,8 +256,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a257356a30c14d95a46f598c8a0e8f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneSettings: {fileID: 11400000, guid: e168034e6ae43f14b9725e4305da77be, type: 2}
+  _sceneSettings: {fileID: 11400000, guid: 363790b41f6fd6740abef2f7ceaf0b19, type: 2}
   _camera: {fileID: 759140387}
+  AutoStart: 1
 --- !u!20 &759140387 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6461766492670513090, guid: 91f825e11bd550f418ef164206a772bf,
