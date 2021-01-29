@@ -20,6 +20,7 @@ public class Character : MonoBehaviour, IAgent
     [Inject] private AStar _pathfinding;
     [Inject] private BattleManager _battleManager;
     
+    
     private List<(int, int)> _highlightedPath;
 
     private readonly ConcurrentDictionary<(int, int), List<(int, int)>> _availablePaths =

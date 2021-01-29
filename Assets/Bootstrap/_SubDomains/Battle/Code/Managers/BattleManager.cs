@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Atomic.Pathfinding.Core;
+using Atomic.Pathfinding.Core.Helpers;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,10 @@ public class BattleManager : MonoBehaviour
     [Inject] private FieldTile[] _tiles;
     [Inject] private Field _field;
     [Inject] private AStar _pathfinder;
+    
+    [Inject(Id = "Player")] private Dictionary<string, Character> _playerCharacters;
+    [Inject(Id = "Enemy")] private Dictionary<string, Character> _enemyCharacters;
+    [Inject(Id = "All")] private Dictionary<string, Character> _allCharacters;
 
     private (int, int) _hoveredTileCoordinates = (-1, -1);
     private Character _draggedCharacter;
@@ -23,6 +28,22 @@ public class BattleManager : MonoBehaviour
         _inputManager.CharacterDragStarted += OnCharacterDragStarted;
         _inputManager.CharacterDragEnded += OnCharacterDragEnded;
         _inputManager.ActionCanceled += OnActionCanceled;
+        
+        UpdateOccupiedTiles();
+    }
+
+    private void UpdateOccupiedTiles()
+    {
+        foreach (var tile in _tiles)
+        {
+            tile.IsOccupied = false;
+        }
+        
+        foreach (var character in _allCharacters)
+        {
+            var coords = character.Value.Origin;
+            _field.TileMatrix[coords.Y(), coords.X()].IsOccupied = true;
+        }
     }
 
     private void OnActionCanceled()
@@ -53,6 +74,7 @@ public class BattleManager : MonoBehaviour
     public void OnCharacterFinishedMovement()
     {
         _highlightedPath = null;
+        UpdateOccupiedTiles();
     }
 
     public void ClearPathHighlight()
@@ -70,7 +92,7 @@ public class BattleManager : MonoBehaviour
         foreach (var tile in _tiles)
         {
             var index = path.IndexOf(tile.Coordinates);
-            if (index >= 0)//path.Contains(tile.Coordinates))
+            if (index >= 0)
             {
                 tile.OnPathHighlight(index);
             }

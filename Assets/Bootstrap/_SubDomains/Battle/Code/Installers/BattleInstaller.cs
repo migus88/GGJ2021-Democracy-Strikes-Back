@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Atomic.Pathfinding.Core;
 using Atomic.Pathfinding.Core.Data;
+using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;
 
@@ -12,7 +13,7 @@ public class BattleInstaller : MonoInstaller
     [SerializeField] private Field _field;
     [SerializeField] private FieldTile[] _tiles;
     [SerializeField] private Character[] _playerCharactes;
-
+    [SerializeField] private Character[] _enemyCharacters;
 
     public override void InstallBindings()
     {
@@ -35,8 +36,20 @@ public class BattleInstaller : MonoInstaller
         {
             playerCharacters.Add(character.name, character);
         }
+        
+        var enemyCharacters = new Dictionary<string, Character>();
 
-        Container.Bind<Dictionary<string, Character>>().WithId("Player").FromInstance(playerCharacters).AsSingle();
+        foreach (var character in _enemyCharacters)
+        {
+            enemyCharacters.Add(character.name, character);
+        }
+        
+        var allCharacters = new Dictionary<string, Character>(playerCharacters);
+        enemyCharacters.ForEach(e => allCharacters.Add(e.Key, e.Value));
+
+        Container.Bind<Dictionary<string, Character>>().WithId("Player").FromInstance(playerCharacters);
+        Container.Bind<Dictionary<string, Character>>().WithId("Enemy").FromInstance(enemyCharacters);
+        Container.Bind<Dictionary<string, Character>>().WithId("All").FromInstance(allCharacters);
 
         foreach (var tile in _tiles)
         {

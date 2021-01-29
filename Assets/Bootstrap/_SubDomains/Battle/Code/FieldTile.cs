@@ -14,8 +14,8 @@ public class FieldTile : MonoBehaviour, IGridCell
         private set => SetWalkable(value);
     }
 
-    public bool IsOccupied => !_isWalkable;
-    public double Weight => 0;
+    public bool IsOccupied { get; set; }
+    public double Weight => _weight;
 
     public (int, int) Coordinates
     {
