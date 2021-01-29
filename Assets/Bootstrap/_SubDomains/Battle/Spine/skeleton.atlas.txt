@@ -1,0 +1,132 @@
+
+skeleton.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ivan_0000_hat
+  rotate: false
+  xy: 2, 185
+  size: 82, 68
+  orig: 82, 68
+  offset: 0, 0
+  index: -1
+Ivan_0001_yesaar
+  rotate: false
+  xy: 137, 145
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+Ivan_0002_head
+  rotate: true
+  xy: 86, 182
+  size: 71, 79
+  orig: 71, 79
+  offset: 0, 0
+  index: -1
+Ivan_0003_hand_L_1
+  rotate: true
+  xy: 108, 157
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+Ivan_0004_hand_L_2
+  rotate: false
+  xy: 167, 166
+  size: 29, 29
+  orig: 29, 29
+  offset: 0, 0
+  index: -1
+Ivan_0005_hand_L_3
+  rotate: true
+  xy: 214, 203
+  size: 15, 37
+  orig: 15, 37
+  offset: 0, 0
+  index: -1
+Ivan_0006_hand_L_4
+  rotate: false
+  xy: 78, 137
+  size: 23, 23
+  orig: 23, 23
+  offset: 0, 0
+  index: -1
+Ivan_0007_leg_L_1
+  rotate: true
+  xy: 137, 168
+  size: 12, 23
+  orig: 12, 23
+  offset: 0, 0
+  index: -1
+Ivan_0008_leg_L_2
+  rotate: true
+  xy: 167, 224
+  size: 29, 45
+  orig: 29, 45
+  offset: 0, 0
+  index: -1
+Ivan_0009_leg_L_3
+  rotate: true
+  xy: 167, 197
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+Ivan_0010_body
+  rotate: true
+  xy: 2, 134
+  size: 49, 74
+  orig: 49, 74
+  offset: 0, 0
+  index: -1
+Ivan_0011_hand_L_4
+  rotate: true
+  xy: 103, 137
+  size: 18, 21
+  orig: 18, 21
+  offset: 0, 0
+  index: -1
+Ivan_0012_hand_L_3
+  rotate: true
+  xy: 78, 162
+  size: 18, 28
+  orig: 18, 28
+  offset: 0, 0
+  index: -1
+Ivan_0013_hand_L_2
+  rotate: false
+  xy: 198, 166
+  size: 13, 29
+  orig: 13, 29
+  offset: 0, 0
+  index: -1
+Ivan_0014_hand_L_1
+  rotate: true
+  xy: 160, 147
+  size: 17, 21
+  orig: 17, 21
+  offset: 0, 0
+  index: -1
+Ivan_0015_leg_R_1
+  rotate: true
+  xy: 183, 148
+  size: 16, 19
+  orig: 16, 19
+  offset: 0, 0
+  index: -1
+Ivan_0016_leg_R_2
+  rotate: false
+  xy: 214, 158
+  size: 33, 43
+  orig: 33, 43
+  offset: 0, 0
+  index: -1
+Ivan_0017_leg_R_3
+  rotate: true
+  xy: 214, 220
+  size: 33, 39
+  orig: 33, 39
+  offset: 0, 0
+  index: -1
