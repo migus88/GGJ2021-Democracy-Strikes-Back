@@ -38,6 +38,11 @@ public class FieldTile : MonoBehaviour, IGridCell
         IsWalkable = _isWalkable;
     }
 
+    public void OnHover()
+    {
+        Debug.Log($"Hovered: {Coordinates}");
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {

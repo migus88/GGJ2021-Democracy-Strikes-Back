@@ -6,22 +6,21 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public event Action<Character> CharacterDragStarted;
-    public event Action<Transform> TileHovered;
+    public event Action<(int, int)> TileHovered;
 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _tileMask;
     [SerializeField] private float _maxRayDistance = 250f;
-    
-    
-    
+
+
     private void Update()
     {
         var hoveredTileTransform = FindHoveredTile();
 
         if (hoveredTileTransform)
         {
-            TileHovered?.Invoke(hoveredTileTransform);
+            TileHovered?.Invoke(hoveredTileTransform.position.VectorToCoordinates());
         }
     }
 

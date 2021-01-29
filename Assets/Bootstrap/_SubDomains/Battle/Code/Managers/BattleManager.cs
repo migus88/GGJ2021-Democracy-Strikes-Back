@@ -6,25 +6,24 @@ using Zenject;
 
 public class BattleManager : MonoBehaviour
 {
-    [Inject]
-    private InputManager _inputManager;
+    [Inject] private InputManager _inputManager;
+    [Inject] private DiContainer _container;
 
     private (int, int) _hoveredTileCoordinates = (-1, -1);
-    
+    private FieldTile _hoveredTile;
+
     private void Awake()
     {
         _inputManager.TileHovered += InputManagerOnTileHovered;
     }
 
-    private void InputManagerOnTileHovered(Transform tileTransform)
+    private void InputManagerOnTileHovered((int, int) coordinates)
     {
-        var coordinates = tileTransform.position.VectorToCoordinates();
-        
-        if(coordinates == _hoveredTileCoordinates)
+        if (coordinates == _hoveredTileCoordinates)
             return;
 
         _hoveredTileCoordinates = coordinates;
-        
-        Debug.Log($"Hovered: {_hoveredTileCoordinates}");
+        _hoveredTile = _container.ResolveId<FieldTile>(_hoveredTileCoordinates);
+        _hoveredTile.OnHover();
     }
 }
