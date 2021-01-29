@@ -137,8 +137,8 @@ public class Character : MonoBehaviour, IAgent
 
         var path = new List<PathCell>
         {
-            new PathCell {Coordinates = Origin},
-            new PathCell {Coordinates = destination}
+            new PathCell {Coordinates = Origin, Direction = direction},
+            new PathCell {Coordinates = destination, Direction = direction}
         };
 
         Move(path, true);
