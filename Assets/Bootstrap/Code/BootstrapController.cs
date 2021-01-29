@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Bootstrap.Code
 {
-    public class StartSceneOnRun : MonoBehaviour
+    public class BootstrapController : MonoBehaviour
     {
         [SerializeField] private SceneService _sceneSystem;
         [SerializeField] private SceneSettings _sceneSettings;

@@ -31,12 +31,11 @@ namespace Bootstrap.Code.Settings
         {
             await Addressables.LoadSceneAsync(scene, LoadSceneMode.Additive).ToUniTask();
             _currentlyLoadedScenes.Add(scene);
-            Debug.Log(_currentlyLoadedScenes.Count.ToString());
         }
         
         public async UniTask UnloadAllScenes()
         {
-            if(_currentlyLoadedScenes.IsEmpty())
+            if(_currentlyLoadedScenes.Count == 0)
                 return;
             
             var tasks = new List<UniTask>();
@@ -54,7 +53,7 @@ namespace Bootstrap.Code.Settings
             await Addressables.UnloadSceneAsync(scene.OperationHandle).ToUniTask();
         }
 
-        public async void Dispose()
+        public async void OnDestroy()
         {
             await UnloadAllScenes();
             _currentlyLoadedScenes.Clear();
