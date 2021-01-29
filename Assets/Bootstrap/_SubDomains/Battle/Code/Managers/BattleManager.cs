@@ -32,6 +32,7 @@ public class BattleManager : MonoBehaviour
 
     private (int, int) _hoveredTileCoordinates = (-1, -1);
     private Character _draggedCharacter;
+    private Character _currentCharacter;
     private List<PathCell> _highlightedPath;
     private TurnManager _turnManager;
 
@@ -70,16 +71,22 @@ public class BattleManager : MonoBehaviour
         _inputManager.ActionCanceled -= OnActionCanceled;
     }
 
-    public void OnCharacterFinishedMovement()
+    public void OnCharacterFinishedMovement(Character character)
     {
-        _highlightedPath = null;
         UpdateOccupiedTiles();
+        
+        if(character != _currentCharacter)
+            return;
+        
+        _highlightedPath = null;
 
         if (ActiveCharacters.All(c => c.Value.ActionPoints <= 0))
         {
             _turnManager.TurnEnded();
             OnTileHovered((-1, -1));
         }
+
+        _currentCharacter = null;
     }
     
     public void HighlightPath(List<PathCell> path)
@@ -144,6 +151,7 @@ public class BattleManager : MonoBehaviour
 
         if (_highlightedPath != null && _highlightedPath.Count > 1)
         {
+            _currentCharacter = _draggedCharacter;
             _draggedCharacter.Move(_highlightedPath);
         }
 
