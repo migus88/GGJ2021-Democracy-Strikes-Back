@@ -44,4 +44,21 @@ public static class VectorHelpers
     {
         return (left.X() + right.X(), left.Y() + right.Y());
     }
+
+    public static CharacterAnimationController.Direction ToAnimDirection(this (int, int) coord)
+    {
+        CharacterAnimationController.Direction direction = CharacterAnimationController.Direction.None;
+
+        if (coord.Y() > 0 || coord.X() > 0)
+            direction |= CharacterAnimationController.Direction.Up;
+        else if (coord.Y() <= 0 || coord.X() <= 0)
+            direction |= CharacterAnimationController.Direction.Down;
+
+        if (coord.X() > 0 || coord.Y() < 0)
+            direction |= CharacterAnimationController.Direction.Left;
+        else
+            direction |= CharacterAnimationController.Direction.Right;
+
+        return direction;
+    }
 }

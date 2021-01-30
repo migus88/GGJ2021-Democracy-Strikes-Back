@@ -556,7 +556,7 @@
     }
   ],
   "animations": {
-    "IVAN_walk": {
+    "walk": {
       "bones": {
         "bone": {
           "rotate": [
@@ -1037,7 +1037,7 @@
         }
       }
     },
-    "Ivan_Idle": {
+    "idle": {
       "bones": {
         "root": {
           "rotate": [

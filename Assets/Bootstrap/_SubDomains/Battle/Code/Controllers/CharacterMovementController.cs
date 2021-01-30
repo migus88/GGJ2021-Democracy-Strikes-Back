@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Atomic.Pathfinding.Core.Helpers;
@@ -14,13 +15,19 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
     {
         public CharacterSettings Settings { get; set; }
 
+        [SerializeField] private CharacterAnimationController _animationController;
+
         [Inject] private BattleManager _battleManager;
         [Inject] private Field _field;
         [Inject(Id = "All")] private Dictionary<string, Character> _allCharacters;
 
         private bool _isMoving = false;
         private Character _character;
-        //private Queue<(List<PathCell>, float)> _queue = new Queue<(List<PathCell>, float)>();
+
+        private void Start()
+        {
+            _animationController.Stand();
+        }
 
         public void Init(Character character)
         {
@@ -30,10 +37,7 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
         public async UniTask MoveToPath(List<PathCell> path, float speedMultiplier = 1f)
         {
             if (_isMoving)
-            {
-                //_queue.Enqueue((path, speedMultiplier));
                 return;
-            }
 
             _isMoving = true;
 
@@ -43,9 +47,15 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
                 .OnWaypointChange(i =>
                 {
                     if (i + 1 >= path.Count)
+                    {
+                        _animationController.Stand();
                         return;
+                    }
+                    
+                    _animationController.Walk();
 
                     var location = path[i + 1];
+                    _animationController.Turn(location.Direction.ToAnimDirection());
 
                     if(!_field.Matrix[location.Coordinates.Y(), location.Coordinates.X()].IsOccupied)
                         return;
@@ -56,6 +66,7 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
                 })
                 .OnComplete(() =>
                 {
+                    _animationController.Stand();
                     _isMoving = false;
                     _battleManager.OnCharacterFinishedMovement(_character);
 
@@ -63,18 +74,13 @@ namespace Bootstrap._SubDomains.Battle.Code.Controllers
 
                     if (!tile)
                     {
+                        _animationController.Fall();
                         _character.Die();
                     }
                 });
 
             while (_isMoving)
                 await UniTask.DelayFrame(1);
-
-            /*if (_queue.Count > 0)
-            {
-                var newTarget = _queue.Dequeue();
-                await MoveToPath(newTarget.Item1, newTarget.Item2);
-            }*/
         }
 
         public void Die()

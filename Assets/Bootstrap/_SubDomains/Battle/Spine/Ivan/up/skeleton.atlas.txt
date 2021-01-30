@@ -1,0 +1,90 @@
+
+skeleton.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+IVAN-UP2_0000_leg_R_2
+  rotate: false
+  xy: 86, 154
+  size: 41, 38
+  orig: 41, 38
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0001_leg_R_1
+  rotate: false
+  xy: 235, 213
+  size: 13, 40
+  orig: 13, 40
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0002_hand_R_3
+  rotate: false
+  xy: 225, 144
+  size: 22, 20
+  orig: 22, 20
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0003_hand_R_2
+  rotate: true
+  xy: 225, 166
+  size: 21, 23
+  orig: 21, 23
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0004_hand_R_1
+  rotate: false
+  xy: 202, 146
+  size: 21, 44
+  orig: 21, 44
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0005_body
+  rotate: true
+  xy: 86, 194
+  size: 59, 79
+  orig: 59, 79
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0006_hadt_d
+  rotate: false
+  xy: 2, 182
+  size: 82, 71
+  orig: 82, 71
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0007_head
+  rotate: true
+  xy: 167, 192
+  size: 61, 66
+  orig: 61, 66
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0008_hand_L_3
+  rotate: true
+  xy: 162, 157
+  size: 33, 38
+  orig: 33, 38
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0009_hand_L_2
+  rotate: false
+  xy: 235, 189
+  size: 18, 22
+  orig: 18, 22
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0010_hand_L_1
+  rotate: true
+  xy: 162, 140
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: -1
+IVAN-UP2_0014_leg_R_3
+  rotate: false
+  xy: 129, 150
+  size: 31, 42
+  orig: 31, 42
+  offset: 0, 0
+  index: -1
