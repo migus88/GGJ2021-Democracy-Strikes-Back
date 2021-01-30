@@ -7415,25 +7415,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1118165590529277311, guid: 81877506395790744b77fb2620bdacd3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3047f4010f1e9144aaf6178b351b9eb2, type: 2}
     - target: {fileID: 6117497656555025800, guid: 81877506395790744b77fb2620bdacd3,
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6907337591485258890, guid: 81877506395790744b77fb2620bdacd3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8502007807370131211, guid: 81877506395790744b77fb2620bdacd3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8502007808268128208, guid: 81877506395790744b77fb2620bdacd3,
         type: 3}
